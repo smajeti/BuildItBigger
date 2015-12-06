@@ -1,17 +1,16 @@
 package com.udacity.gradle.builditbigger.free;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.javajokeslib.JavaJokes;
 import com.sai.androidjokeslibrary.EndpointsAsyncTask;
 import com.udacity.gradle.builditbigger.R;
 
@@ -55,12 +54,20 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
 
     @Override
     public void deliverJoke(String joke) {
-        Toast.makeText(getActivity(), joke, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(), joke, Toast.LENGTH_LONG).show();
+        sendIntent(joke, com.sai.androidjokeslibrary.MainActivity.class);
     }
 
 
     public void tellJoke(View view) {
         new EndpointsAsyncTask(this).execute(getActivity());
     }
+
+    private void sendIntent(String joke, Class<?> cls) {
+        Intent intent = new Intent(getActivity(), cls);
+        intent.putExtra(com.sai.androidjokeslibrary.MainActivity.JOKE_TXT_INTENT_ID, joke);
+        startActivity(intent);
+    }
+
 
 }
